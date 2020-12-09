@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package cannery.databus;
+
+message Message {
+    //metadata
+    bytes meta = 1;
+    //message body
+    map<string, string> body = 2;
+}

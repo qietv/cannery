@@ -1,8 +1,8 @@
 package agent
 
 import (
-	"github.com/hpcloud/tail"
-	"strings"
+    "github.com/hpcloud/tail"
+    "strings"
 )
 
 var (
@@ -53,5 +53,7 @@ func (agent *logAgent) loop() {
 }
 
 func (agent *logAgent) logSplit(lineText string) (err error) {
-	msgBody := strings.Split(lineText, "/")
+	msgBody := strings.Fields(`2020-01-91 woami "test aaa"`)
+	print(msgBody)
+	return
 }

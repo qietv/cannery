@@ -8,7 +8,7 @@ type Message struct {
 }
 
 type Metadata struct {
-	ID        []byte    // message ID
+	ID        [16]byte    // message ID
 	Host      string    // message product server
 	ServiceID string    // message product service ID
 	Time      time.Time // message time
