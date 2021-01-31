@@ -19,6 +19,10 @@ func NewTail(file string) (err error) {
 	agent = &logAgent{}
 	agent.tailMan, err = tail.TailFile(file, tail.Config{
 		ReOpen: true,
+		Location: &tail.SeekInfo{
+			Offset: 0,
+			Whence: 0,
+		},
 		Pipe:   false,
 		Follow: true,
 		Logger: nil,

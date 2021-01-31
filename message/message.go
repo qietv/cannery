@@ -13,10 +13,9 @@ type Message struct {
 //Metadata The message metadata
 type Metadata struct {
 	ID        ID        // message ID
-	Host      string    // message product server
-	ServiceID string    // message product service ID
 	Time      time.Time // message time
-	TrackId   string
+	ServiceID int    	// message product service ID
+	Host      string    // message product server
 }
 
 func (m *Message) Parse(buf []byte) (err error) {
