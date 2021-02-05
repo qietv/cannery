@@ -1,8 +1,8 @@
 package agent
 
 import (
-    "github.com/hpcloud/tail"
-    "strings"
+	"github.com/hpcloud/tail"
+	"strings"
 )
 
 var (

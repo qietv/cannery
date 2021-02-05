@@ -10,9 +10,9 @@ import (
 )
 
 const (
-	OffsetTable = "offset"
+	OffsetTable  = "offset"
 	ProjectTable = "projects"
-	InitSQL   = `CREATE TABLE IF NOT EXISTS "` + OffsetTable + `"
+	InitSQL      = `CREATE TABLE IF NOT EXISTS "` + OffsetTable + `"
 		(
 			[id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
 			[offset] INTEGER  NOT NULL,
@@ -43,7 +43,7 @@ type sqlite struct {
 
 func (s *sqlite) Initialize() (err error) {
 	var (
-		db     *sql.DB
+		db *sql.DB
 	)
 	s.locker = &sync.Mutex{}
 	db, err = sql.Open("sqlite3", fmt.Sprintf("file:%s?cache=shared", s.filename))
@@ -63,11 +63,11 @@ func (s *sqlite) Initialize() (err error) {
 	return
 }
 
-func (s *sqlite) AddProject(ctx context.Context,host, project, path string) (err error) {
+func (s *sqlite) AddProject(ctx context.Context, host, project, path string) (err error) {
 	var (
-		tx *sql.Tx
+		tx     *sql.Tx
 		result sql.Result
-		pid int64
+		pid    int64
 	)
 	tx, err = s.conn.BeginTx(ctx, &sql.TxOptions{
 		Isolation: sql.IsolationLevel(sql.LevelRepeatableRead),
@@ -86,7 +86,7 @@ func (s *sqlite) AddProject(ctx context.Context,host, project, path string) (err
 	return tx.Commit()
 }
 
-func (s *sqlite) RmProject(ctx context.Context, project string) (err error) {
+func (s *sqlite) RemoveProject(ctx context.Context, project string) (err error) {
 	_, err = s.conn.ExecContext(ctx, "DELETE FROM offset WHERE project = ? ", project)
 	return
 }
@@ -113,7 +113,7 @@ func (s *sqlite) UpdateRead(ctx context.Context, project string, offset int, rep
 	)
 	if replace {
 		result, err = s.conn.ExecContext(ctx, "UPDATE offset SET offset = ? WHERE  project = ?", offset, project)
-	}else {
+	} else {
 		result, err = s.conn.ExecContext(ctx, "UPDATE offset SET offset = offset + ? WHERE  project = ?", offset, project)
 	}
 	if affected, err = result.RowsAffected(); affected == 0 || err != nil {
@@ -125,13 +125,13 @@ func (s *sqlite) UpdateRead(ctx context.Context, project string, offset int, rep
 func (s *sqlite) watch(db *sql.DB) (err error) {
 	var (
 		retryTimes int
-		ticker *time.Ticker
+		ticker     *time.Ticker
 	)
 	go func(s *sqlite, db *sql.DB) {
 		ticker = time.NewTicker(time.Second * 5)
 		for {
 			select {
-			case <- ticker.C:
+			case <-ticker.C:
 				s.locker.Lock()
 				pError := db.Ping()
 				if pError != nil {

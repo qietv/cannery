@@ -1,6 +1,7 @@
 module cannery
 
 require (
+	github.com/boltdb/bolt v1.3.1
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/hpcloud/tail v1.0.0
 	github.com/mattn/go-sqlite3 v1.14.6

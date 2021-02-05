@@ -14,7 +14,7 @@ type Message struct {
 type Metadata struct {
 	ID        ID        // message ID
 	Time      time.Time // message time
-	ServiceID int    	// message product service ID
+	ServiceID int       // message product service ID
 	Host      string    // message product server
 }
 

@@ -10,12 +10,13 @@ const (
 	PAUSED
 	COMPLETED
 )
+
 type Status struct {
-	Signal chan int
+	Signal   chan int
 	Projects map[string]*Project
-	_status STATUS
+	_status  STATUS
 }
 
-func (s *Status) Get() STATUS  {
+func (s *Status) Get() STATUS {
 	return s._status
 }
