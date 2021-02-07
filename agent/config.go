@@ -1,9 +1,9 @@
 package agent
 
 import (
-    "fmt"
-    "strings"
-    "time"
+	"fmt"
+	"strings"
+	"time"
 )
 
 type Config struct {
@@ -13,17 +13,18 @@ type Config struct {
 	RemoteServer  string `yaml:"remoter" json:"remoter"`
 	CommitTimeout time.Time
 	Recoverable   bool
+	Database      string //sqlite、kv
 
 }
 
-func DefaultConfig()*Config {
-   return  &Config{
-        ServerID:     0,
-        Listener:      "",
-        RemoteServer:  "",
-        CommitTimeout: time.Time{},
-        Recoverable:   false,
-    }
+func DefaultConfig() *Config {
+	return &Config{
+		ServerID:      0,
+		Listener:      "",
+		RemoteServer:  "",
+		CommitTimeout: time.Time{},
+		Recoverable:   false,
+	}
 }
 func ValidateConfig(c *Config) (err error) {
 	if c.Listener == "" || (!strings.HasPrefix(c.Listener, "grpc://") && strings.HasPrefix(c.Listener, "http://")) {

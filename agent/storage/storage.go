@@ -9,6 +9,11 @@ var (
 	UnknownProject = errors.New("project unknown")
 )
 
+type ServerInfo struct {
+	ID         int    `json:"_"`
+	ServerName string `json:"project"`
+}
+
 type Offset struct {
 	ID      int    `json:"_"`
 	Project string `json:"project"`

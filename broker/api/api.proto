@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package cannery.databus;
+
+message Message {
+    //metadata
+    bytes meta = 1;
+    //message body
+    map<string, string> body = 2;
+}
+//RegisterReq register an agent
+message RegisterReq {
+    int32   id = 1;
+    string  servername = 2;
+    map<string, string> meta = 3;
+}
+message RegisterResp {
+    int32   id = 1;
+    bool    accepted =2;
+}
+
+//UnRegisterReq unregister an agent
+message UnRegisterReq {
+    int32   id = 1;
+}
+//UnRegisterResp
+message UnRegisterResp {
+    string message = 1;
+}
+//HeartbeatReq heartbeat request
+message HeartbeatReq {
+    int32   id = 1;
+}
+//HeartbeatResp heartbeat response
+message HeartbeatResp {
+    int32   id = 1;
+}
+
+//HeartbeatResp heartbeat response
+message CommitReq {
+    Message message = 1;
+}
+message CommitResp {
+
+}
+
+service Broker {
+    rpc register(RegisterReq) returns(RegisterResp);
+    //Heartbeat
+    //agent should be heartbeat with interval 30s~720s
+    rpc heartbeat(HeartbeatReq) returns (HeartbeatResp) ;
+    //UnRegister agent unregister from broker cluster
+    rpc unregister(UnRegisterReq) returns (UnRegisterResp);
+    //
+    rpc commit()
+}

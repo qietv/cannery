@@ -85,7 +85,6 @@ func Test_UpOffsetKV(t *testing.T) {
 	assert.NoError(t, err, fmt.Sprintf("update fail: %v", err))
 }
 
-
 func Test_OffsetKV(t *testing.T) {
 	k, _ := initKV("kv.db")
 	println(k.conn)

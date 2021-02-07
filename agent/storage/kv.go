@@ -33,7 +33,7 @@ func (k *kv) AddProject(ctx context.Context, host, project, path string) (err er
 			info   []byte
 			offset [8]byte
 		)
-        offset = [8]byte{}
+		offset = [8]byte{}
 		bucket, err = tx.CreateBucketIfNotExists([]byte(project))
 		if err != nil {
 			return fmt.Errorf("create bucket: %s", err)
@@ -68,7 +68,7 @@ func (k *kv) RemoveProject(ctx context.Context, project string) (err error) {
 func (k *kv) Read(ctx context.Context, project string) (offset int, err error) {
 	err = k.conn.Update(func(tx *bolt.Tx) (err error) {
 		var (
-			bucket *bolt.Bucket
+			bucket    *bolt.Bucket
 			offsetBuf []byte
 		)
 		bucket = tx.Bucket([]byte(project))
@@ -90,12 +90,12 @@ func (k *kv) UpdateRead(ctx context.Context, project string, offset int, replace
 			newOffset uint64
 			toFill    []byte
 		)
-        toFill = make([]byte, 8)
+		toFill = make([]byte, 8)
 		bucket = tx.Bucket([]byte(project))
 		if bucket == nil {
-		    err = UnknownProject
-		    return
-        }
+			err = UnknownProject
+			return
+		}
 		if replace {
 			newOffset = uint64(offset) + binary.BigEndian.Uint64(bucket.Get([]byte("offset")))
 		} else {
