@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
-protoc  -I ../databus/api/api.proto \
-        --go_out=plugins=grpc:./databus/api
+protoPath=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )
+echo ${protoPath}
+protoc  -I ${protoPath}/broker/api \
+        --go_out=plugins=grpc:${protoPath}/broker/api \
+        ${protoPath}/broker/api/api.proto

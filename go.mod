@@ -14,3 +14,7 @@ require (
 )
 
 go 1.15
+
+replace (
+    github.com/qietv/qgrpc => ../qgrpc
+)

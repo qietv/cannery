@@ -1,6 +1,7 @@
 syntax = "proto3";
 
-package cannery.databus;
+package api;
+option go_package = "api";
 
 message Message {
     //metadata
@@ -36,21 +37,26 @@ message HeartbeatResp {
     int32   id = 1;
 }
 
-//HeartbeatResp heartbeat response
+//HeartbeatResp commit request
 message CommitReq {
     Message message = 1;
 }
+//CommitResp commit response
 message CommitResp {
-
+    bool success = 2;
 }
 
 service Broker {
     rpc register(RegisterReq) returns(RegisterResp);
+
     //Heartbeat
     //agent should be heartbeat with interval 30s~720s
     rpc heartbeat(HeartbeatReq) returns (HeartbeatResp) ;
+
     //UnRegister agent unregister from broker cluster
     rpc unregister(UnRegisterReq) returns (UnRegisterResp);
-    //
-    rpc commit()
+
+
+    //commit message into broker
+    rpc commit(CommitReq) returns (CommitResp);
 }
