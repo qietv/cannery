@@ -12,7 +12,7 @@ var (
 type server struct {
 }
 
-func Startup() grpcServer {
+func Startup() {
 	s, err := qgrpc.New(&qgrpc.Config{
 		Name:        "qietv",
 		Network:     "tcp",

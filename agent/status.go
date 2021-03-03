@@ -1,5 +1,9 @@
 package agent
 
+import (
+	. "cannery/pkg"
+)
+
 type STATUS int
 
 const (

@@ -10,14 +10,14 @@ var (
 )
 
 type logAgent struct {
-	tailMan *tail.Tail
-	offset  int64
+	reader *tail.Tail
+	offset int64
 }
 
 //NewTail new log tail instance
 func NewTail(file string) (err error) {
 	agent = &logAgent{}
-	agent.tailMan, err = tail.TailFile(file, tail.Config{
+	agent.reader, err = tail.TailFile(file, tail.Config{
 		ReOpen: true,
 		Location: &tail.SeekInfo{
 			Offset: 0,
@@ -35,18 +35,18 @@ func NewTail(file string) (err error) {
 }
 
 func (agent *logAgent) Graceful() (err error) {
-	agent.offset, err = agent.tailMan.Tell()
+	agent.offset, err = agent.reader.Tell()
 	if err != nil {
 		return
 	}
-	err = agent.tailMan.Stop()
+	err = agent.reader.Stop()
 	return
 }
 
 func (agent *logAgent) loop() {
 	for {
 		select {
-		case line := <-agent.tailMan.Lines:
+		case line := <-agent.reader.Lines:
 			if line.Err != nil {
 
 			}

@@ -1,4 +1,4 @@
-package message
+package pkg
 
 import "time"
 
