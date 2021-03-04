@@ -1,4 +1,4 @@
-package agent
+package pkg
 
 import (
 	. "cannery/pkg"

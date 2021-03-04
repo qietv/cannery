@@ -1,6 +1,8 @@
 package pkg
 
-import "os"
+import (
+	"os"
+)
 
 type Project struct {
 	ID     string

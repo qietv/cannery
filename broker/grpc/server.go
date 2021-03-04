@@ -13,7 +13,7 @@ var (
 type server struct {}
 
 
-func Startup() {
+func Startup()  {
 	s, err := qgrpc.New(&qgrpc.Config{
 		Name:        "cannery",
 		Network:     "tcp",
@@ -27,7 +27,7 @@ func Startup() {
 	if err != nil {
 		panic("grpc server start fail")
 	}
-	defer s.Server.GracefulStop()
+
 }
 
 
