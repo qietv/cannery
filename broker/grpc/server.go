@@ -10,10 +10,9 @@ var (
 	grpcServer qgrpc.Server
 )
 
-type server struct {}
+type server struct{}
 
-
-func Startup()  {
+func Startup() {
 	s, err := qgrpc.New(&qgrpc.Config{
 		Name:        "cannery",
 		Network:     "tcp",
@@ -29,9 +28,6 @@ func Startup()  {
 	}
 
 }
-
-
-
 
 func (s *server) Register(context.Context, *api.RegisterReq) (*api.RegisterResp, error) {
 	panic("implement me")

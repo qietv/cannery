@@ -25,6 +25,7 @@ type Peer struct {
 }
 
 type Timeout struct {
+	Commit      Duration `yaml:"commit"`
 	Transport   Duration `yaml:"transport"`
 	Heartbeat   Duration `yaml:"heartbeat"`
 	Election    Duration `yaml:"election"`
@@ -42,7 +43,7 @@ func DefaultConfig() *Config {
 		SnapshotThreshold: 8192,
 		SnapshotInterval:  Duration(120 * time.Second),
 		Peer: &Peer{
-			Listener:        "0.0.0.0:8808",
+			Listener: "0.0.0.0:8808",
 			Timeout: &Timeout{
 				Transport:   Duration(10 * time.Second),
 				Heartbeat:   Duration(1000 * time.Millisecond),

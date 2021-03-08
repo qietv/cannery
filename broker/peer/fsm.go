@@ -9,12 +9,6 @@ import (
 	"sync"
 )
 
-type Event struct {
-	EventName string `yaml:"event"`
-	LogName   string `yaml:"key"`
-	LogBody   string `yaml:"value"`
-}
-
 type fsmSnapshot struct {
 	store sync.Map
 }
@@ -24,24 +18,27 @@ type fsm struct {
 	store sync.Map
 }
 
-func (fsm *fsm) Apply(l *raft.Log) interface{} {
+func (fsm *fsm) Apply(l *raft.Log) (val interface{}) {
 	var (
 		err error
 		evt *Event
 	)
 	evt = &Event{}
-    err = json.Unmarshal(l.Data, evt)
-    if err != nil {
-        logkit.Warnf("fsm: apply unmarshal fail, %v", err.Error())
-        return nil
-    }
-    switch evt.EventName {
-    case "PUT","POST":
-        fsm.store.Store(evt.LogName, evt.LogBody)
-    case "DELETE":
-        fsm.store.Delete(evt.LogName)
-    }
-    return nil
+	err = json.Unmarshal(l.Data, evt)
+	if err != nil {
+		logkit.Warnf("fsm: apply unmarshal fail, %v", err.Error())
+		return nil
+	}
+	switch evt.EventName {
+	case "PUT", "POST":
+		fsm.store.Store(evt.LogName, evt.LogBody)
+	case "DELETE":
+		fsm.store.Delete(evt.LogName)
+	case "GET":
+		val, _ = fsm.store.Load(evt.LogName)
+		return
+	}
+	return nil
 }
 
 func (fsm *fsm) Snapshot() (fs raft.FSMSnapshot, err error) {
